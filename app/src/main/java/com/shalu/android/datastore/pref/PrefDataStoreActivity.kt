@@ -5,22 +5,22 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.shalu.android.datastore.R
-import com.shalu.android.datastore.SettingsManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class PrefDataStoreActivity : AppCompatActivity() {
 
-    private lateinit var settingsManager: SettingsManager
+    private lateinit var prefSettingsManager: PrefSettingsManager
     private lateinit var outerView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_pref_datastore)
+        setContentView(R.layout.activity_datastore)
+        title = getString(R.string.preferences_datastore)
         outerView = findViewById(R.id.outerView)
 
-        settingsManager = SettingsManager(this)
+        prefSettingsManager = PrefSettingsManager(this)
 
         readSettings()
 
@@ -35,13 +35,13 @@ class PrefDataStoreActivity : AppCompatActivity() {
 
     fun updateSettings(color: Int) {
         GlobalScope.launch {
-            settingsManager.updateColor(color)
+            prefSettingsManager.updateColor(color)
         }
     }
 
     fun readSettings() {
         GlobalScope.launch {
-            settingsManager.userPreferencesFlow.collect {
+            prefSettingsManager.userPreferencesFlow.collect {
                 outerView.setBackgroundColor(
                     ContextCompat.getColor(
                         this@PrefDataStoreActivity,

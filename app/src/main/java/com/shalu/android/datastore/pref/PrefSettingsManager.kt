@@ -1,13 +1,14 @@
-package com.shalu.android.datastore
+package com.shalu.android.datastore.pref
 
 import android.content.Context
 import androidx.datastore.preferences.*
+import com.shalu.android.datastore.UserPreferences
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 
-class SettingsManager(val context: Context) {
+class PrefSettingsManager(val context: Context) {
     private val dataStore = context.createDataStore(SETTINGS_PREF)
 
     val userPreferencesFlow: Flow<UserPreferences> = dataStore.data

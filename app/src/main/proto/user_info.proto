@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+option java_package = "com.shalu.android.datastore";
+option java_multiple_files = true;
+
+message UserSettings {
+
+  enum BgColor {
+    COLOR_WHITE = 0;
+    COLOR_BLACK = 1;
+  }
+  BgColor bgColor = 1;
+}
