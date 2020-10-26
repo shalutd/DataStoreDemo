@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.shalu.android.datastore.R
 import com.shalu.android.datastore.UserSettings
+import com.shalu.android.datastore.manager.ProtoSettingsManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -21,7 +22,8 @@ class ProtoDataStoreActivity : AppCompatActivity() {
         title = getString(R.string.proto_datastore)
         outerView = findViewById(R.id.outerView)
 
-        protoSettingsManager = ProtoSettingsManager(this)
+        protoSettingsManager =
+            ProtoSettingsManager(this)
 
         readSettings()
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.shalu.android.datastore.pref.MigrateToPrefDataStoreActivity
 import com.shalu.android.datastore.pref.PrefDataStoreActivity
 import com.shalu.android.datastore.proto.ProtoDataStoreActivity
 
@@ -18,6 +19,10 @@ class MainActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btnProto).setOnClickListener {
             startActivity(Intent(this, ProtoDataStoreActivity::class.java))
+        }
+
+        findViewById<View>(R.id.btnMigratePref).setOnClickListener {
+            startActivity(Intent(this, MigrateToPrefDataStoreActivity::class.java))
         }
     }
 }

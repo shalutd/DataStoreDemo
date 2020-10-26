@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.shalu.android.datastore.R
+import com.shalu.android.datastore.manager.PrefSettingsManager
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -20,7 +21,8 @@ class PrefDataStoreActivity : AppCompatActivity() {
         title = getString(R.string.preferences_datastore)
         outerView = findViewById(R.id.outerView)
 
-        prefSettingsManager = PrefSettingsManager(this)
+        prefSettingsManager =
+            PrefSettingsManager(this)
 
         readSettings()
 

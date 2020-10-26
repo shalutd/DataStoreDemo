@@ -17,6 +17,8 @@
         </activity>
         <activity android:name=".proto.ProtoDataStoreActivity" />
         <activity android:name=".pref.PrefDataStoreActivity" />
+
+        <activity android:name=".pref.MigrateToPrefDataStoreActivity" />
     </application>
 
 </manifest>

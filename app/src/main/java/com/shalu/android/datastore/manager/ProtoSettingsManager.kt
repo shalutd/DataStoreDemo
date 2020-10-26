@@ -1,15 +1,12 @@
-package com.shalu.android.datastore.proto
+package com.shalu.android.datastore.manager
 
 import android.content.Context
 import androidx.datastore.DataStore
 import androidx.datastore.createDataStore
-import androidx.datastore.preferences.*
-import com.shalu.android.datastore.UserPreferences
 import com.shalu.android.datastore.UserSettings
-import com.shalu.android.datastore.pref.PrefSettingsManager
+import com.shalu.android.datastore.proto.ProtoSettingsSerializer
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.map
 import java.io.IOException
 
 class ProtoSettingsManager(val context: Context) {

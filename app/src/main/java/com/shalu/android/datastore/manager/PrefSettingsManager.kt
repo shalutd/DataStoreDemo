@@ -1,4 +1,4 @@
-package com.shalu.android.datastore.pref
+package com.shalu.android.datastore.manager
 
 import android.content.Context
 import androidx.datastore.preferences.*
