@@ -1,28 +1,40 @@
 package com.shalu.android.datastore.pref
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.shalu.android.datastore.R
 import com.shalu.android.datastore.manager.MigrationManager
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MigrateToPrefDataStoreActivity : AppCompatActivity() {
 
     private lateinit var migrationManager: MigrationManager
     private lateinit var sharedpreferences: SharedPreferences
+    private lateinit var tvPrefFirstName: TextView
+    private lateinit var tvPrefLastName: TextView
+    private lateinit var tvDatastoreFirstName: TextView
+    private lateinit var tvDatastoreLastName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_migrate_datastore)
         title = getString(R.string.migrate_preferences_datastore)
 
-        setSharedPreferenceData("Shalu", "TD")
+        tvPrefFirstName = findViewById(R.id.tvPref_first_name)
+        tvPrefLastName = findViewById(R.id.tvPref_last_name)
+        tvDatastoreFirstName = findViewById(R.id.tv_datastore_first_name)
+        tvDatastoreLastName = findViewById(R.id.tv_datastore_last_name)
+
+        setSharedPreferenceData("Roberto", "Bagio")
 
         findViewById<View>(R.id.btnMigrate).setOnClickListener {
             migrateToPreferencesDataStore()
@@ -38,38 +50,31 @@ class MigrateToPrefDataStoreActivity : AppCompatActivity() {
             MigrationManager.USER_LAST_NAME, lastName
         ).apply()
 
-        readSharedPreferenceData()
+        displaySharedPreferenceData()
     }
 
-    private fun readSharedPreferenceData() {
+    @SuppressLint("SetTextI18n")
+    private fun displaySharedPreferenceData() {
         // verify data exists in shared preferences
-        Log.i(
-            "TEST",
-            "FIRSTNAME = ${sharedpreferences.getString(MigrationManager.USER_FIRST_NAME, "")}"
-        )
-        Log.i(
-            "TEST",
-            "LASTNAME = ${sharedpreferences.getString(MigrationManager.USER_LAST_NAME, "")}"
-        )
+        tvPrefFirstName.text =
+            "FirstName : ${sharedpreferences.getString(MigrationManager.USER_FIRST_NAME, "")}"
+        tvPrefLastName.text =
+            "LstName : ${sharedpreferences.getString(MigrationManager.USER_LAST_NAME, "")}"
     }
 
+    @SuppressLint("SetTextI18n")
     private fun migrateToPreferencesDataStore() {
-        migrationManager =
-            MigrationManager(this)
+        migrationManager = MigrationManager(this)
 
         GlobalScope.launch {
             migrationManager.userDetailsFlow.collect {
-                Log.i(
-                    "TEST",
-                    "Migrated FIRSTNAME = ${it.firstName}"
-                )
-
-                Log.i(
-                    "TEST",
-                    "Migrated LASTNAME = ${it.lastName}"
-                )
+                withContext(Dispatchers.Main) {
+                    //Update UI
+                    tvDatastoreFirstName.text = "FirstName :  ${it.firstName}"
+                    tvDatastoreLastName.text = "LastName : ${it.lastName}"
+                    displaySharedPreferenceData();
+                }
             }
-            readSharedPreferenceData()
         }
     }
 }
